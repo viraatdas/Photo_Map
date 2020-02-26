@@ -40,6 +40,7 @@
                     <connections>
                         <outlet property="mapView" destination="H25-af-6IY" id="9IP-J2-HSw"/>
                         <segue destination="WeT-38-qba" kind="push" identifier="fullImageSegue" id="B5X-dM-HfZ"/>
+                        <segue destination="eZf-Nb-6PU" kind="modal" identifier="tagSegue" id="1ac-JG-9RD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fxu-uv-tTR" userLabel="First Responder" sceneMemberID="firstResponder"/>

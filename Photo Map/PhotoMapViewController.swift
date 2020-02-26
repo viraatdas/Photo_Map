@@ -57,8 +57,6 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
         
         
         
-        print("HIII")
-        
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
             print("Camera is available 📸")
             vc.sourceType = .camera
@@ -67,7 +65,8 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
             vc.sourceType = .photoLibrary
         }
         
-        present(vc, animated: true, completion: nil)
+        self.present(vc, animated: true, completion: nil)
+    
 
         
         
