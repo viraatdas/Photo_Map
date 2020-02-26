@@ -14,8 +14,7 @@ import MapKit
 class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     /* ---- TODO: Create mapView outlet*/
-
-    
+    @IBOutlet weak var mapView: MKMapView!
     
     // Store picked image
     var pickedImage: UIImage!
@@ -23,11 +22,16 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let mapCenter = CLLocationCoordinate2D(latitude: 1.290270, longitude: 103.851959)
+        let mapSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+        let region = MKCoordinateRegion(center: mapCenter, span: mapSpan)
+        // Set animated property to true to animate the transition to the region
+        mapView.setRegion(region, animated: false)
+        
     }
     
     
     /* ------ TODO: Set initial location after launching app */
-    
     
     
     /* ----- TODO: Instantiate UIImagePicker after camera button tapped */
