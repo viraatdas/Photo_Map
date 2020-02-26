@@ -19,16 +19,61 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
     // Store picked image
     var pickedImage: UIImage!
     
+    
+  
+  
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let mapCenter = CLLocationCoordinate2D(latitude: 1.290270, longitude: 103.851959)
+        let mapCenter = CLLocationCoordinate2D(latitude: 39.6295 , longitude:-79.9559 )
         let mapSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
         let region = MKCoordinateRegion(center: mapCenter, span: mapSpan)
         // Set animated property to true to animate the transition to the region
         mapView.setRegion(region, animated: false)
         
+      
+   
+        
     }
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let originalImage = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
+        let editedImage = info[UIImagePickerController.InfoKey.editedImage] as! UIImage
+        
+        // Do something with the images (based on your use case)
+        pickedImage = editedImage
+        
+        // Dismiss UIImagePickerController to go back to your original view controller
+        dismiss(animated: true) {
+            self.performSegue(withIdentifier: "tagSegue", sender: nil)
+        }
+    }
+    
+    @IBAction func cameraAction(_ sender: Any) {
+        let vc = UIImagePickerController()
+        vc.delegate = self
+        vc.allowsEditing = true
+//        vc.sourceType = UIImagePickerController.SourceType.camera
+        
+        
+        
+        print("HIII")
+        
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            print("Camera is available 📸")
+            vc.sourceType = .camera
+        } else {
+            print("Camera 🚫 available so we will use photo library instead")
+            vc.sourceType = .photoLibrary
+        }
+        
+        present(vc, animated: true, completion: nil)
+
+        
+        
+    }
+    
+  
     
     
     /* ------ TODO: Set initial location after launching app */
@@ -76,23 +121,7 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
     }
     
     
-    func imagePickerController(_ picker: UIImagePickerController,
-                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-// Local variable inserted by Swift 4.2 migrator.
-let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
-
-        // Get the image captured by the UIImagePickerController
-        let _ = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as! UIImage
-        let editedImage = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.editedImage)] as! UIImage
-        
-        // Do something with the images (based on your use case)
-        pickedImage = editedImage
-        
-        // Dismiss UIImagePickerController to go back to your original view controller
-        dismiss(animated: true, completion: nil)
-        performSegue(withIdentifier: "tagSegue", sender: nil)
-        
-    }
+    
 
 }
 
