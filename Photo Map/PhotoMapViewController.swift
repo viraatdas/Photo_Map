@@ -19,10 +19,6 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
     // Store picked image
     var pickedImage: UIImage!
     
-    
-  
-  
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -32,10 +28,11 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
         // Set animated property to true to animate the transition to the region
         mapView.setRegion(region, animated: false)
         
-      
-   
-        
+        locationsPickedLocation(coords:mapCenter)
+       
     }
+    
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let originalImage = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
         let editedImage = info[UIImagePickerController.InfoKey.editedImage] as! UIImage
@@ -79,8 +76,7 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
     
     
     /* ----- TODO: Instantiate UIImagePicker after camera button tapped */
-  
-    
+
     
     /* ----- TODO: Override prepare (for segue) funcion to show Present LocationsViewController */
     
@@ -91,7 +87,17 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
     
     
     /* ----- TODO: add pin to the map */
-    
+    func locationsPickedLocation(coords:CLLocationCoordinate2D) {
+        let annotation = MKPointAnnotation()
+        let latitude = coords.latitude
+        let longitude = coords.longitude
+        
+        let locationCoordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        annotation.coordinate = locationCoordinate
+        
+        annotation.title = "Founders Den"
+        mapView.addAnnotation(annotation)
+    }
     
     
     /* ----- TODO: Customize mapview to add custom map notations */
