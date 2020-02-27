@@ -66,12 +66,14 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
         /*-------TODO--------*/
         //Set the latitude and longitude of the venue and send it to the protocol
         
+        
         // Return to the PhotoMapViewController with the lat and lng of venue
         
         let latString = "\(lat)"
         let lngString = "\(lng)"
 
         print(latString + " " + lngString)
+        self.dismiss(animated: true, completion: nil)
     }
     
     func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
