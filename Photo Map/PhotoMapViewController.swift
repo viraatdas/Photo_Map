@@ -11,7 +11,7 @@
 import UIKit
 import MapKit
 
-class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, MKMapViewDelegate  {
     
     /* ---- TODO: Create mapView outlet*/
     @IBOutlet weak var mapView: MKMapView!
@@ -21,6 +21,8 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        mapView.delegate = self
 
         let mapCenter = CLLocationCoordinate2D(latitude: 39.6295 , longitude:-79.9559 )
         let mapSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
@@ -28,7 +30,9 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
         // Set animated property to true to animate the transition to the region
         mapView.setRegion(region, animated: false)
         
-        locationsPickedLocation(coords:mapCenter)
+        locationsPickedLocation(coords: mapCenter)
+        
+        
        
     }
     
@@ -40,10 +44,14 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
         // Do something with the images (based on your use case)
         pickedImage = editedImage
         
+        
+        
         // Dismiss UIImagePickerController to go back to your original view controller
         dismiss(animated: true) {
             self.performSegue(withIdentifier: "tagSegue", sender: nil)
         }
+        
+        
     }
     
     @IBAction func cameraAction(_ sender: Any) {
@@ -70,7 +78,24 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
     }
     
   
-    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        let reuseID = "myAnnotationView"
+        
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseID)
+        if (annotationView == nil) {
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseID)
+            annotationView!.canShowCallout = true
+            annotationView!.leftCalloutAccessoryView = UIImageView(frame: CGRect(x:0, y:0, width: 50, height:50))
+        }
+        
+        let imageView = annotationView?.leftCalloutAccessoryView as! UIImageView
+        // Add the image you stored from the image picker
+        imageView.image = pickedImage
+        
+        
+        
+        return annotationView
+    }
     
     /* ------ TODO: Set initial location after launching app */
     
